@@ -1,0 +1,16 @@
+# required modules, make sure to import them for the function to work
+# from openai import OpenAI
+# client = OpenAI()
+
+def get_response(prompt, selected_model): 
+    response = client.chat.completions.create(
+    model= selected_model,
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."}, # you can change the system prompt here or add a variable to configure the system prompt
+        {"role": "user", "content": prompt},
+    ],
+    max_tokens = 4000, # Set the max token for your use case
+    temperature = 1, # set temperature for your use case
+    top_p = 1, 
+    )
+    return completion.choices[0].message.content

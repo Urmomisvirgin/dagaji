@@ -1,0 +1,25 @@
+import os
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain.schema import HumanMessage, SystemMessage, AIMessage
+from langchain_openai import ChatOpenAI
+from langchain.prompts.chat import (
+    ChatPromptTemplate, 
+    SystemMessagePromptTemplate, 
+    HumanMessagePromptTemplate
+)
+
+
+os.environ['OPENAI_API_KEY'] = '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'
+
+chat = ChatOpenAI(
+    streaming = True, callbacks=[StreamingStdOutCallbackHandler()], temperature=0.7
+)
+
+template = "write me a poem about {topic}"
+system_messages_prompt = SystemMessagePromptTemplate.from_template(template)
+chat_prompt = ChatPromptTemplate.from_messages([system_messages_prompt])
+
+response = chat.invoke(chat_prompt.format_prompt(topic="california sunset").to_messages())
+
+print(response.content)
+
